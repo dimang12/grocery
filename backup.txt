@@ -1,0 +1,28 @@
+   $table->string('category_name');
+            $table->integer('parent_id')->default(0);
+            $table->integer('left')->default(0);
+            $table->integer('right')->default(0);
+            $table->integer('level')->default(0);
+
+
+products table;
+$table->string('product_name');
+            //the url for each product that would help to top of search engine
+            $table->string('slug')->uniqid();
+            // It will be stored information about story, detail about product
+            $table->text('details');
+            //will talk about how that look like;
+            //Ex: Sweet, bite-size, Dutch style puffy, pancake flovored
+            $table->string('profile');
+            //It references to category table
+            $table->foreignId('category_id')->constrained();
+            //It says about size and weight
+            $table->string('size');
+            //It tells about price of each product
+            $table->float('price');
+            //How many time of viewing
+            $table->unsignedInteger('views')->default(0);
+            //Opinion that user or viewer interested or not
+            $table->unsignedInteger('interested')->default(0);
+            //It tells about date would be introduced to customer
+            $table->date('available_at');
