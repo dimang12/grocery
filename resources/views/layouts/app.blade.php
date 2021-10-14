@@ -58,7 +58,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('category') }}">
                             <i class="bi-stack"></i>
                             Categories
                         </a>
@@ -95,7 +95,7 @@
                     <div class="container-fluid">
 
                         <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
+                            <i class="bi-justify"></i>
                             <span>Toggle Sidebar</span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -105,6 +105,7 @@
                                 @guest
                                 @if (Route::has('login'))
                                 <li class="nav-item">
+
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                                 @endif
