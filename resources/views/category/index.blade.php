@@ -18,4 +18,5 @@
     </li>
     @endforeach
 </ul>
+<category-manager :categories="{{$categories}}"></category-manager>
 @endsection
