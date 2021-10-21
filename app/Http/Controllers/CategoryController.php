@@ -21,6 +21,9 @@ class CategoryController extends Controller
 
     public function index()
     {
+
+        $this->authorize('manage', 'App\Category');
+        
         $categories = Category::orderBy('cate_ordering')->get();
 
         return view('category.index', [

@@ -18,5 +18,5 @@
     </li>
     @endforeach
 </ul>
-<category-manager :categories="{{$categories}}"></category-manager>
+<category-manager :initial-categories="{{$categories}}"></category-manager>
 @endsection

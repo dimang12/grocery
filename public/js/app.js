@@ -2072,8 +2072,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['categories']
+  props: ['initialCategories'],
+  data: function data() {
+    return {
+      categories: _.cloneDeep(this.initialCategories)
+    };
+  },
+  methods: {
+    removeCategory: function removeCategory(index) {
+      if (confirm('Are you sure want to delete?')) {
+        this.categories.splice(index);
+      }
+    },
+    update: function update(id) {
+      if (confirm('Are you sure want to update?')) {
+        alert(id);
+      } else {}
+    },
+    addCategory: function addCategory() {
+      var _this = this;
+
+      this.categories.push({
+        id: this.categories.length + 1,
+        category_name: '',
+        parent_id: 0,
+        left: 0,
+        right: 0,
+        cate_ordering: this.categories.length + 1
+      });
+      this.$nextTick(function () {
+        window.scrollTo(0, document.body.scrollHeight);
+
+        _this.$refs[''][0].focus();
+
+        console.log(_this.$refs[''][0]);
+      });
+      return false;
+    }
+  }
 });
 
 /***/ }),
@@ -37631,14 +37678,103 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "form",
     { staticClass: "row" },
-    _vm._l(_vm.categories, function(category) {
-      return _c("div", { key: category.id, staticClass: "col-12" }, [
-        _vm._v("\n        " + _vm._s(category.category_name) + "\n    ")
-      ])
-    }),
-    0
+    [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.addCategory()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "bi bi bi-file-plus-fill" }),
+            _vm._v("\n            Add category\n        ")
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.categories, function(category, index) {
+        return _c("div", { key: category.id, staticClass: "col-12" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: category.category_name,
+                expression: "category.category_name"
+              }
+            ],
+            ref: category.category_name,
+            refInFor: true,
+            attrs: { type: "text" },
+            domProps: { value: category.category_name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(category, "category_name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: category.cate_ordering,
+                expression: "category.cate_ordering"
+              }
+            ],
+            attrs: { type: "number" },
+            domProps: { value: category.cate_ordering },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(category, "cate_ordering", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  return _vm.update(category.id)
+                }
+              }
+            },
+            [_vm._v("Update")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function($event) {
+                  return _vm.removeCategory(index)
+                }
+              }
+            },
+            [_vm._v("Delete")]
+          )
+        ])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
