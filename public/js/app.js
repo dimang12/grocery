@@ -2082,20 +2082,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['initialCategories'],
   data: function data() {
     return {
-      categories: _.cloneDeep(this.initialCategories)
+      categories: _.cloneDeep(this.initialCategories),
+      feedback: ''
     };
   },
-  created: function created() {
-    axios.post('/api/categories/upsert');
-  },
+  // created() {
+  //     axios.post('/api/categories/upsert');
+  // },
   methods: {
     removeCategory: function removeCategory(index) {
+      var _this = this;
+
       if (confirm('Are you sure want to delete?')) {
-        this.categories.splice(index);
+        // this.categories.splice(index)
+        var id = this.categories[index].id;
+        axios["delete"]('/api/categories/' + id).then(function (res) {
+          _this.categories.splice(index, 1);
+        });
       }
     },
     update: function update(id) {
@@ -2104,10 +2113,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {}
     },
     addCategory: function addCategory() {
-      var _this = this;
+      var _this2 = this;
 
       this.categories.push({
-        id: this.categories.length + 1,
         category_name: '',
         parent_id: 0,
         left: 0,
@@ -2117,11 +2125,23 @@ __webpack_require__.r(__webpack_exports__);
       this.$nextTick(function () {
         window.scrollTo(0, document.body.scrollHeight);
 
-        _this.$refs[''][0].focus();
+        _this2.$refs[''][0].focus();
 
-        console.log(_this.$refs[''][0]);
+        console.log(_this2.$refs[''][0]);
       });
       return false;
+    },
+    saveCategories: function saveCategories() {
+      var _this3 = this;
+
+      axios.post('/api/categories/upsert', {
+        categories: this.categories
+      }).then(function (res) {
+        if (res.data.success) {
+          _this3.feedback = 'Changes saved.';
+          _this3.categories = res.data.categories;
+        }
+      });
     }
   }
 });
@@ -37682,7 +37702,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "form",
-    { staticClass: "row" },
+    {
+      staticClass: "row",
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.saveCategories.apply(null, arguments)
+        }
+      }
+    },
     [
       _c("div", { staticClass: "col-12" }, [
         _c(
@@ -37775,7 +37803,11 @@ var render = function() {
             [_vm._v("Delete")]
           )
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "submit" } }, [_vm._v("Save")]),
+      _vm._v(" "),
+      _c("div", [_vm._v(_vm._s(_vm.feedback))])
     ],
     2
   )

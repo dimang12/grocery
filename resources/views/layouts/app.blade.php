@@ -33,10 +33,9 @@
             <nav id="sidebar" class="">
                 <div class="sidebar-header">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        <img class="w-100" src="{{URL::asset('img/whollycity-logo.png')}}">
+                        <strong>BS</strong>
                     </a>
-                    </h3>
-                    <strong>BS</strong>
                 </div>
 
                 <ul class="list-unstyled components">

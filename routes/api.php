@@ -22,3 +22,4 @@ use App\Http\Controllers\CategoryController;
 // Both ways are work perfectly as the same.
 Route::post('/categories/upsert', [CategoryController::class, 'upsert']);
 // Route::post('/categories/upsert', 'App\Http\Controllers\CategoryController@upsert');
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);

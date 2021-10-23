@@ -1,5 +1,5 @@
 <template>
-    <form class="row">
+    <form class="row" @submit.prevent="saveCategories">
         <div class="col-12"> 
             <button type="button" @click="addCategory()" class="btn btn-light">
                 <i class="bi bi bi-file-plus-fill"></i>
@@ -13,6 +13,8 @@
             <a @click="removeCategory(index)" class="btn btn-danger">Delete</a>
 
         </div>
+        <button type="submit">Save</button>
+        <div>{{ feedback }}</div>
     </form>
 </template>
 <script>
@@ -22,16 +24,26 @@
         ],
         data(){
             return{
-                categories: _.cloneDeep(this.initialCategories)
+                categories: _.cloneDeep(this.initialCategories),
+                feedback: '',
             };
         },
-        created() {
-            axios.post('/api/categories/upsert');
-        },
+        // created() {
+        //     axios.post('/api/categories/upsert');
+        // },
         methods: {
             removeCategory(index) {
                 if(confirm('Are you sure want to delete?')){
-                    this.categories.splice(index)
+                    // this.categories.splice(index)
+                    let id = this.categories[index].id;
+
+                    axios
+                        .delete('/api/categories/' + id)
+                        .then(
+                            (res) => {
+                                this.categories.splice(index, 1)
+                            }
+                    );
                 }
             },
             update(id) {
@@ -44,7 +56,6 @@
             },
             addCategory() {
                 this.categories.push({
-                    id: this.categories.length + 1,
                     category_name: '',
                     parent_id: 0,
                     left: 0,
@@ -57,6 +68,19 @@
                     console.log(this.$refs[''][0]);
                 });
                 return false;
+            },
+            saveCategories() {
+                axios
+                    .post('/api/categories/upsert', {
+                        categories: this.categories,
+                    })
+                    .then((res) => {
+                        if (res.data.success) {
+                            this.feedback = 'Changes saved.';
+                            this.categories = res.data.categories;
+                        }
+                    })
+                ;
             }
         }
         

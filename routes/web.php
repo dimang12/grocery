@@ -25,3 +25,4 @@ Auth::routes(["verify" => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('verified');
 Route::get('/category', [CategoryController::class, 'index'])->name('category')->middleware('verified');
+// Route::get('/', []);
