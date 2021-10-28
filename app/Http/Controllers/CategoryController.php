@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
+use DateTime;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -41,9 +43,15 @@ class CategoryController extends Controller
         $this->authorize('manage', 'App\Category');
         $categories = $request->post('categories');
         foreach ($categories as $cate) {
+            $current = new DateTime();
             if (isset($cate['id'])) {
+                $cate['updated_at'] = $current;
+                unset($cate['created_at']);
                 Category::where('id', $cate['id'])->update($cate);
             } else {
+
+                $cate['created_date'] = $current->getTimestamp();
+                $cate['updated_date'] = $current->getTimestamp();
                 Category::create($cate);
             }
         }
@@ -56,5 +64,21 @@ class CategoryController extends Controller
         //delete function is embed already to object of Category model
         $category->delete();
         return ['success' => true];
+    }
+
+    public function detail($id)
+    {
+        echo 'This is menu detail';
+        $products = [];
+        if (!empty($id)) {
+            $products = Product::all();
+        }
+        // print_r($products);
+        return view(
+            'category.detail',
+            [
+                'products' => $products
+            ]
+        );
     }
 }

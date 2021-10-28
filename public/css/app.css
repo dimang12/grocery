@@ -10263,3 +10263,10 @@ a.article:hover {
     display: none;
   }
 }
+#content {
+  background: #f5f5f5;
+}
+
+.block-01 .bl-header {
+  border-bottom: rgba(0, 0, 0, 0.07) solid 1px;
+}

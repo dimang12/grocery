@@ -70,6 +70,8 @@
                 return false;
             },
             saveCategories() {
+                // console.log(this.categories);
+                // return false;
                 axios
                     .post('/api/categories/upsert', {
                         categories: this.categories,
