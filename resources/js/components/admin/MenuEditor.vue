@@ -1,6 +1,5 @@
 <template>
     <div class="block-01">
-        <h3 class="bl-header pb-3">Menu editor::</h3>
         <div class="bl-body p-3">
             <router-link :to="{name: 'categories'}" >Categories</router-link>
             <router-link :to="{name: 'add-item'}" >Add Item</router-link>

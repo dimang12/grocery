@@ -11,7 +11,7 @@
             <input type="number" v-model="category.cate_ordering" />
             <a @click="update(category.id)" class="btn btn-primary">Update</a>
             <a @click="removeCategory(index)" class="btn btn-danger">Delete</a>
-
+            <router-link :to="{name: 'product-list'}" class="btn btn-success">View products</router-link>
         </div>
         <button type="submit">Save</button>
         <div>{{ feedback }}</div>

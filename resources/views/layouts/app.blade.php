@@ -57,7 +57,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('category') }}">
+                        <a href="{{ route('menu-editor') }}">
                             <i class="bi-stack"></i>
                             Categories
                         </a>

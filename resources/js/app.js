@@ -20,11 +20,14 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('category-manager', require('./components/CategoryManager.vue').default);
-Vue.component('product-list', require('./components/ProductList.vue').default);
 Vue.component('menu-item', require('./components/MenuItem.vue').default);
 
 Vue.component('admin-menu-editor', require('./components/admin/MenuEditor.vue').default);
 Vue.component('admin-product-list', require('./components/admin/AdminProductList.vue').default);
+
+// Controll on product
+Vue.component('produt-manager', require('./components/products/ProductManager').default)
+Vue.component('product-list', require('./components/ProductList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
