@@ -11,7 +11,15 @@
                     <th>Views</th>
                 </thead>
                 <tbody>
-
+                    <tr v-for="product in products" :value="product.id" :key="product.id" >
+                        <td>{{ "_" }}</td>
+                        <td>
+                            <router-link :to="{name: 'product-detail', params: {id: product.id}}">{{ product.product_name }}</router-link>  
+                        </td>
+                        <td>{{ product.size }}</td>
+                        <td>$ {{ product.price }}</td>
+                        <td>{{ product.views }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -19,6 +27,26 @@
 </template>
 <script>
 export default {
+    props: ["initialProducts"],
+    data(){
+        return{
+            products: _.cloneDeep(this.initialProducts),
+            feedback: '',
+        };
+    },
+    created(){
+        axios
+            .get('/api/products/')
+            .then((res) => {
+                // console.log(this.products);
+                this.products = res.data.products;
+            })
+        ;
+    },
+    methods: {
+        
+    }
+
     
 }
 </script>

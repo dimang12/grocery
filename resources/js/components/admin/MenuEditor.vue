@@ -13,6 +13,7 @@
     import CategoryManager from '../CategoryManager.vue';
     import MenuItem from '../MenuItem.vue';
     import ProductList from '../ProductList.vue';
+    import ProductDetail from '../products/ProductDetail.vue'
     // Vue.use(VueRouter);
     export default {
         props: ['categories'],
@@ -39,6 +40,11 @@
                     name: 'product-list',
                     component: ProductList
 
+                },
+                {
+                    path: '/product-detail/:id',
+                    name: 'product-detail',
+                    component: ProductDetail
                 },
                 {
                     path: '*',

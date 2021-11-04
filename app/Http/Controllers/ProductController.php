@@ -15,6 +15,9 @@ class ProductController extends Controller
     public function index()
     {
         //
+        $products = Product::orderBy("created_at")->get();
+        // print_r($product);
+        return ['success' => true, 'products' => $products];
     }
 
     /**
@@ -47,6 +50,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+
     }
 
     /**
@@ -81,5 +85,22 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function detail($id)
+    {
+        $isFound = false;
+        $product = [];
+        if (!empty($id)) {
+            $product = Product::where('products.id', $id)
+                ->join('categories', "products.category_id", "=", "categories.id")
+                ->get()
+                ->first();
+            // print_r($product);
+            $isFound = true;
+        } else {
+            $isFound = false;
+        }
+        return ['isFound' => $isFound, 'product' => $product];
     }
 }
