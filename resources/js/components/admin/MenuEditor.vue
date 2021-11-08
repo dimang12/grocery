@@ -13,6 +13,7 @@
     import CategoryManager from '../CategoryManager.vue';
     import MenuItem from '../MenuItem.vue';
     import ProductList from '../ProductList.vue';
+    import NewProduct from '../products/NewProduct.vue';
     import ProductDetail from '../products/ProductDetail.vue'
     // Vue.use(VueRouter);
     export default {
@@ -45,6 +46,11 @@
                     path: '/product-detail/:id',
                     name: 'product-detail',
                     component: ProductDetail
+                },
+                {
+                    path: '/new-product',
+                    name: 'new-product',
+                    component: NewProduct
                 },
                 {
                     path: '*',

@@ -15,12 +15,6 @@ class CategoryController extends Controller
         // $this->middleware('auth');
     }
 
-    public function showmaincate()
-    {
-        return view('user.showmaincate', [
-            'maincategories' => Category::findall()
-        ]);
-    }
 
     public function index()
     {
@@ -32,6 +26,14 @@ class CategoryController extends Controller
         return view('category.index', [
             'categories' => $categories
         ]);
+    }
+    /*
+     * Get all available categories
+     */
+    public function get() {
+        $this->authorize('manage', 'App\Category');
+        $categories = Category::select('id','category_name')->orderByDesc('cate_ordering')->get();
+        return $categories;
     }
     /*
     * To update or insert

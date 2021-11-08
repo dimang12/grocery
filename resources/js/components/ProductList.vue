@@ -1,6 +1,20 @@
 <template>
     <div class="block-01">
-        <h3 class="bl-header pt-3 pb-3 mb-4">List of Products </h3>
+        <h3 class="bl-header pt-3 pb-3 mb-4">
+            <div class="row">
+                <div class="col-8">
+                    List of Products 
+                </div>
+                <div class="col-4 actions text-right">
+                    <router-link class="btn btn-light text-dark" :to="{name: 'new-product'}">
+                        <i class="bi-plus-circle-fill"></i> 
+                        <span>New product</span>
+                    </router-link>
+                </div>
+            </div>
+            
+            
+        </h3>
         <div class="bl-body">
             <table class="table table-bordered">
                 <thead>
