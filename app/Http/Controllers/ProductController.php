@@ -38,7 +38,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!$request->user()->can('edit-menu')) {
+            return response('Unauthorized', 403);
+        }
+        $request->validate([
+            'product_name' => 'required|max:128',
+            'category_id' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
+            'size' => 'required',
+            'profile' => 'max:1024',
+            'detail' => 'max:1024',
+        ]);
+//        $product = $request->post();
+//        $product['slug'] = str_slug($product['product_name']);
+        Product::create($request->post());
     }
 
     /**

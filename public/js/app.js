@@ -2437,7 +2437,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      categories: _.cloneDeep(this.initCategories)
+      categories: _.cloneDeep(this.initCategories),
+      product: {
+        product_name: 'some',
+        slug: '',
+        category_id: '',
+        price: 0,
+        size: '',
+        profile: '',
+        details: ''
+      }
     };
   },
   created: function created() {
@@ -2446,6 +2455,16 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/categories/').then(function (res) {
       _this.categories = res.data;
     });
+  },
+  methods: {
+    save: function save() {
+      axios.post('/api/product/add', this.product).then(function (res) {
+        console.log(res);
+      });
+    },
+    generateSlug: function generateSlug() {
+      this.product.slug = this.product.product_name.trim().replace(/\s/g, '-');
+    }
   }
 });
 
@@ -39114,7 +39133,23 @@ var render = function() {
         _c("div", { staticClass: "col-8" }, [_vm._v("New Product")]),
         _vm._v(" "),
         _c("div", { staticClass: "col-4 action text-right" }, [
-          _vm._m(0),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light text-dark",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.save()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "bi-save-fill" }),
+              _vm._v(" "),
+              _c("span", [_vm._v("Save")])
+            ]
+          ),
           _vm._v(" "),
           _c(
             "button",
@@ -39137,131 +39172,232 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "bl-body" }, [
-      _c("form", { staticClass: "block-02" }, [
-        _c("h5", { staticClass: "bl-header p-3" }, [
-          _vm._v("Basic Information")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "bl-body p-3" }, [
-          _c("div", { staticClass: "row mb-3" }, [
-            _c("div", { staticClass: "col-6" }, [
-              _c("label", { staticClass: "form-label" }, [_vm._v("Category")]),
-              _vm._v(" "),
-              _vm.categories
-                ? _c(
-                    "select",
-                    { staticClass: "form-control" },
-                    _vm._l(_vm.categories, function(category) {
-                      return _c("option", [
-                        _vm._v(_vm._s(category.category_name))
-                      ])
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
+      _c(
+        "form",
+        {
+          staticClass: "block-02",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.save.apply(null, arguments)
+            }
+          }
+        },
+        [
+          _c("h5", { staticClass: "bl-header p-3" }, [
+            _vm._v("Basic Information")
           ]),
           _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm._m(4)
-        ])
-      ])
+          _c("div", { staticClass: "bl-body p-3" }, [
+            _c("div", { staticClass: "row mb-3" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Category")
+                ]),
+                _vm._v(" "),
+                _vm.categories
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.category_id,
+                            expression: "product.category_id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.product,
+                              "category_id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.categories, function(category) {
+                        return _c(
+                          "option",
+                          { domProps: { value: category.id } },
+                          [_vm._v(_vm._s(category.category_name))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Product Name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.product_name,
+                      expression: "product.product_name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder: "type product name here",
+                    name: "product_name"
+                  },
+                  domProps: { value: _vm.product.product_name },
+                  on: {
+                    change: _vm.generateSlug,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.product, "product_name", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mb-3" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Price")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.price,
+                      expression: "product.price"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "price",
+                    placeholder: "price can be number or decimal"
+                  },
+                  domProps: { value: _vm.product.price },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.product, "price", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Size")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.size,
+                      expression: "product.size"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder: "size can be text or number",
+                    name: "size"
+                  },
+                  domProps: { value: _vm.product.size },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.product, "size", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mb-3" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Profile")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.profile,
+                      expression: "product.profile"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "profile" },
+                  domProps: { value: _vm.product.profile },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.product, "profile", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Details")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.details,
+                      expression: "product.details"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "details" },
+                  domProps: { value: _vm.product.details },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.product, "details", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      )
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-light text-dark", attrs: { type: "button" } },
-      [
-        _c("i", { staticClass: "bi-save-fill" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Save")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6" }, [
-      _c("label", { staticClass: "form-label" }, [_vm._v("Product Name")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          placeholder: "type product name here",
-          name: "product_name"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-3" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c("label", { staticClass: "form-label" }, [_vm._v("Price")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "price",
-            placeholder: "price can be number or decimal"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
-        _c("label", { staticClass: "form-label" }, [_vm._v("Size")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            placeholder: "size can be text or number",
-            name: "size"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-3" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c("label", { staticClass: "form-label" }, [_vm._v("Profile")]),
-        _vm._v(" "),
-        _c("textarea", {
-          staticClass: "form-control",
-          attrs: { name: "profile" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
-        _c("label", { staticClass: "form-label" }, [_vm._v("Size")]),
-        _vm._v(" "),
-        _c("textarea", {
-          staticClass: "form-control",
-          attrs: { name: "details" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
