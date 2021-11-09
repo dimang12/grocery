@@ -59,6 +59,8 @@
                             </div>
                         </div>
                         <div class="col-6">
+                            <label class="form-label">Available at</label>
+                            <input class="form-control" type="date" v-model="product.available_at" />
                         </div>
                     </div>
                 </div>
@@ -75,13 +77,14 @@ export default {
         return{
             categories: _.cloneDeep(this.initCategories),
             product: {
-                product_name: 'some',
+                product_name: '',
                 slug: '',
                 category_id: '',
                 price: 0,
                 size: '',
                 profile: '',
-                details: ''
+                details: '',
+                available_at: ''
             }
         }
     },
@@ -98,7 +101,10 @@ export default {
             axios
                 .post('/api/product/add', this.product)
                 .then((res) => {
-                    console.log(res);
+                    this.$router.push({path: '/product-list'});
+                })
+                .catch((error) => {
+
                 })
             ;
         },

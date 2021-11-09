@@ -44,6 +44,7 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required|max:128',
             'category_id' => 'required|numeric',
+            'slug' => 'nullable',
             'price' => 'required|numeric|min:0',
             'size' => 'required',
             'profile' => 'max:1024',
@@ -51,6 +52,7 @@ class ProductController extends Controller
         ]);
 //        $product = $request->post();
 //        $product['slug'] = str_slug($product['product_name']);
+
         Product::create($request->post());
     }
 

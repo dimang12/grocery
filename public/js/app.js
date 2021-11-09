@@ -2431,6 +2431,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     initCategories: Array
@@ -2439,13 +2441,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       categories: _.cloneDeep(this.initCategories),
       product: {
-        product_name: 'some',
+        product_name: '',
         slug: '',
         category_id: '',
         price: 0,
         size: '',
         profile: '',
-        details: ''
+        details: '',
+        available_at: ''
       }
     };
   },
@@ -2458,9 +2461,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     save: function save() {
+      var _this2 = this;
+
       axios.post('/api/product/add', this.product).then(function (res) {
-        console.log(res);
-      });
+        _this2.$router.push({
+          path: '/product-list'
+        });
+      })["catch"](function (error) {});
     },
     generateSlug: function generateSlug() {
       this.product.slug = this.product.product_name.trim().replace(/\s/g, '-');
@@ -39390,7 +39397,37 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "row mb-3" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Available at")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.available_at,
+                      expression: "product.available_at"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date" },
+                  domProps: { value: _vm.product.available_at },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.product, "available_at", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ])
           ])
         ]
       )
@@ -39402,23 +39439,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-3" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c("div", [
-          _c(
-            "label",
-            { staticClass: "form-label", attrs: { for: "formFileLg" } },
-            [_vm._v("Large file input example")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { id: "formFileLg", type: "file" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6" })
+    return _c("div", { staticClass: "col-6" }, [
+      _c("div", [
+        _c(
+          "label",
+          { staticClass: "form-label", attrs: { for: "formFileLg" } },
+          [_vm._v("Large file input example")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { id: "formFileLg", type: "file" }
+        })
+      ])
     ])
   }
 ]
