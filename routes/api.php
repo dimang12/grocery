@@ -29,5 +29,6 @@ Route::get('/categories', [CategoryController::class, 'get']);
 // Product
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'detail']);
+Route::delete('/product/destroy', [ProductController::class, 'destroy']);
 // Use for adding new product into database
 Route::post('/product/add', [ProductController::class, 'store']);

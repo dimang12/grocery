@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -25,10 +27,13 @@ Vue.component('menu-item', require('./components/MenuItem.vue').default);
 Vue.component('admin-menu-editor', require('./components/admin/MenuEditor.vue').default);
 Vue.component('admin-product-list', require('./components/admin/AdminProductList.vue').default);
 
-// Controll on product
+// Control on product
 Vue.component('produt-manager', require('./components/products/ProductManager').default)
 Vue.component('product-list', require('./components/ProductList.vue').default);
 
+// add BoostrapVue into project
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use DateTime;
+
 
 class ProductController extends Controller
 {
@@ -15,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::orderBy("created_at")->get();
+        $products = Product::orderBy("created_at", 'desc')->get();
         // print_r($product);
         return ['success' => true, 'products' => $products];
     }
@@ -97,9 +99,17 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+
+    public function destroy(Request $data)
+//    public function destroy($id)
     {
-        //
+        $isDestroyed = false;
+        if( !empty($data) ){
+            $currentDate = new DateTime();
+//            Product::where('id', $data->id)->update(['deleted_at'=>$currentDate]);
+            $isDestroyed = true;
+        }
+        return $isDestroyed;
     }
 
     public function detail($id)

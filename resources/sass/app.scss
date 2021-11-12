@@ -7,9 +7,14 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "~bootstrap-vue/dist/bootstrap-vue.min.css";
 
 // Sidebar
 @import 'sidebar-toggle';
 
 // block components
-@import 'block-components'
+@import 'block-components';
+
+@import "general";
+
+

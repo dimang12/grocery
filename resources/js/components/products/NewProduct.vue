@@ -4,9 +4,15 @@
             <div class="row">
                 <div class="col-8">New Product</div>
                 <div class="col-4 action text-right">
+                    <div>
+                        <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+                        <b-modal id="modal-1" title="BootstrapVue">
+                            <p class="my-4">Hello from modal!</p>
+                        </b-modal>
+                    </div>
                     <button type="button" class="btn btn-light text-dark" @click="save()">
                         <i class="bi-save-fill"></i>
-                        <span>Save</span>
+                        <span>Saves</span>
                     </button>
                     <button class="btn btn-light text-dark" @click="$router.go(-1)">
                         <i class="bi-arrow-left-circle-fill"></i>
