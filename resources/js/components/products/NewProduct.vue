@@ -4,13 +4,7 @@
             <div class="row">
                 <div class="col-8">New Product</div>
                 <div class="col-4 action text-right">
-                    <div>
-                        <b-button v-b-modal.modal-1>Launch demo modal</b-button>
-                        <b-modal id="modal-1" title="BootstrapVue">
-                            <p class="my-4">Hello from modal!</p>
-                        </b-modal>
-                    </div>
-                    <button type="button" class="btn btn-light text-dark" @click="save()">
+                    <button type="button" class="btn btn-secondary" @click="save()">
                         <i class="bi-save-fill"></i>
                         <span>Saves</span>
                     </button>
@@ -38,39 +32,78 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-4">
+                            <label class="form-label">SKU</label>
+                            <input v-model="product.SKU" type="text" name="price" class="form-control" placeholder="price can be number or decimal"/>
+                        </div>
+                        <div class="col-4">
                             <label class="form-label">Price</label>
                             <input v-model="product.price" type="text" name="price" class="form-control" placeholder="price can be number or decimal"/>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label">Size</label>
                             <input v-model="product.size" type="text" placeholder="size can be text or number" class="form-control"  name="size"/>
                         </div>
                     </div>
                     <div class="row mb-3">
+                        <div class="col-4">
+                            <label class="form-label">Availability</label>
+                            <b-form-select v-model="product.available">
+                                <b-select-option value="1">Year round product</b-select-option>
+                                <b-form-select-option value="2">Seasonal product</b-form-select-option>
+                                <b-form-select-option value="3">Holiday product</b-form-select-option>
+                            </b-form-select>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">Origin</label>
+                            <input v-model="product.origin" type="text" placeholder="USA..." class="form-control"  name="size"/>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">Available at</label>
+                            <input class="form-control" type="date" v-model="product.available_at" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Profile</label>
-                            <textarea v-model="product.profile" class="form-control" name="profile"></textarea>
+                            <textarea rows="5" v-model="product.profile" class="form-control" name="profile"></textarea>
                         </div>
                         <div class="col-6">
                             <label class="form-label">Details</label>
-                            <textarea v-model="product.details" class="form-control" name="details"></textarea>
+                            <textarea rows="5" v-model="product.details" class="form-control" name="details"></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div>
                                 <label for="formFileLg" class="form-label">Large file input example</label>
                                 <input class="form-control" id="formFileLg" type="file">
                             </div>
                         </div>
-                        <div class="col-6">
-                            <label class="form-label">Available at</label>
-                            <input class="form-control" type="date" v-model="product.available_at" />
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div>
+                                <label class="form-label">Our story</label>
+                                <b-textarea rows="8" v-model="product.our_story"></b-textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="bl-footer pt-3 mt-4">
+            <div class="col-12 action text-right">
+                <button type="button" class="btn btn-secondary" @click="save()">
+                    <i class="bi-save-fill"></i>
+                    <span>Saves</span>
+                </button>
+                <button class="btn btn-light text-dark" @click="$router.go(-1)">
+                    <i class="bi-arrow-left-circle-fill"></i>
+                    <span>Back</span>
+                </button>
+            </div>
         </div>
     </main>
 </template>
@@ -85,11 +118,15 @@ export default {
             product: {
                 product_name: '',
                 slug: '',
+                SKU: '',
                 category_id: '',
                 price: 0,
                 size: '',
                 profile: '',
                 details: '',
+                our_story: '',
+                available: 1,
+                origin: '',
                 available_at: ''
             }
         }

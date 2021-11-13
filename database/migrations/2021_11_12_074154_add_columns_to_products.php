@@ -14,7 +14,10 @@ class AddColumnsToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->text('our_story')->nullable()->after('profile');
+            $table->string('SKU', 10)->after('product_name');
+            $table->string('origin', 100)->after('interested');
+            $table->smallInteger('available')->after('interested');
         });
     }
 
@@ -26,7 +29,10 @@ class AddColumnsToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->dropColumn('our_story');
+            $table->dropColumn('SKU');
+            $table->dropColumn('origin');
+            $table->dropColumn('available');
         });
     }
 }
