@@ -1,21 +1,64 @@
 <template>
-    <form class="row" @submit.prevent="saveCategories">
-        <div class="col-12"> 
-            <button type="button" @click="addCategory()" class="btn btn-light">
-                <i class="bi bi bi-file-plus-fill"></i>
-                Add category
-            </button>
-        </div>
-        <div class="col-12"  v-for="(category,index) in categories" :key="category.id">
-            <input type="text" v-model="category.category_name" :ref="category.category_name" />
-            <input type="number" v-model="category.cate_ordering" />
-            <a @click="update(category.id)" class="btn btn-primary">Update</a>
-            <a @click="removeCategory(index)" class="btn btn-danger">Delete</a>
-            <router-link :to="{name: 'product-list'}" class="btn btn-success">View products</router-link>
-        </div>
-        <button type="submit">Save</button>
-        <div>{{ feedback }}</div>
-    </form>
+    <div class="block-01">
+        <section class="row bl-header pb-3 mb-3">
+            <h3 class="col-6">Category Manager</h3>
+            <div class="col-6 action text-right">
+                <button type="button" @click="addCategory()" class="btn btn-secondary">
+                    <i class="bi bi bi-file-plus-fill"></i>
+                    Add category
+                </button>
+            </div>
+        </section>
+        <section class="row bl-body">
+            <div class="col-8">
+                <router-link
+                    v-for="(category,index) in categories" :key="category.id"
+                    :to="{name:'product-list', params:{id: category.id}}"
+                    class="btn btn-outline-secondary p-3 m-2">
+                    {{category.category_name}}
+                </router-link>
+            </div>
+            <div class="col-4">
+                <form class="block-02 p-3" @submit.prevent="" >
+                    <section class="bl-header pb-2 mb-2 d-flex">
+                        <h4 class="flex-grow-0">New Category</h4>
+                        <div class="action flex-grow-1">
+                            <b-button-close></b-button-close>
+                        </div>
+                    </section>
+                    <section class="bl-body">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Parent</label>
+                                <select v-model="category.parent_id" class="form-control ">
+                                    <option v-bind:value="0">Root category</option>
+                                    <option v-for="(cate, index) in categories" v-bind:value="cate.id">{{cate.category_name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Category name</label>
+                                <input type="text" v-model="category.category_name" class="form-control">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Category detail:</label>
+                                <input type="text" v-model="category.cate_detail" class="form-control">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Ordering</label>
+                                <input type="number" v-model="category.cate_ordering" class="form-control">
+                            </div>
+                        </div>
+                    </section>
+                    <section class="bl-footer text-right pt-3 mt-2">
+                        <b-button class="btn btn-secondary" @click="saveCategories">
+                            <i class="bi-save-fill"></i>
+                            <span class="ml-2">Save</span>
+                        </b-button>
+                    </section>
+                </form>
+            </div>
+        </section>
+    </div>
 </template>
 <script>
     export default {
@@ -25,12 +68,19 @@
         data(){
             return{
                 categories: _.cloneDeep(this.initialCategories),
+                category: {},
                 feedback: '',
             };
         },
-        // created() {
-        //     axios.post('/api/categories/upsert');
-        // },
+        created() {
+            // axios.post('/api/categories/upsert');
+            this.category = {
+                parent_id: 0,
+                category_name: '',
+                cate_detail: '',
+                cate_ordering: this.categories.length + 1
+            }
+        },
         methods: {
             removeCategory(index) {
                 if(confirm('Are you sure want to delete?')){
@@ -52,7 +102,7 @@
                 }else{
 
                 }
-                
+
             },
             addCategory() {
                 this.categories.push({
@@ -74,7 +124,8 @@
                 // return false;
                 axios
                     .post('/api/categories/upsert', {
-                        categories: this.categories,
+                        // categories: this.categories,
+                        categories: [this.category],
                     })
                     .then((res) => {
                         if (res.data.success) {
@@ -85,6 +136,5 @@
                 ;
             }
         }
-        
     }
 </script>

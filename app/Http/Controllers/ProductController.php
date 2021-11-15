@@ -14,10 +14,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id = null)
     {
         //
-        $products = Product::orderBy("created_at", 'desc')->get();
+        $productQuery = Product::orderBy("created_at", 'desc');
+        if($id != null){
+            $productQuery->where('category_id', $id);
+        }
+        $products = $productQuery->get();
+
         // print_r($product);
         return ['success' => true, 'products' => $products];
     }
@@ -49,8 +54,12 @@ class ProductController extends Controller
             'slug' => 'nullable',
             'price' => 'required|numeric|min:0',
             'size' => 'required',
+            'SKU' => 'required',
+            'origin' => 'nullable',
+
             'profile' => 'max:1024',
             'detail' => 'max:1024',
+            'our_story' => 'nullable'
         ]);
 //        $product = $request->post();
 //        $product['slug'] = str_slug($product['product_name']);

@@ -60,6 +60,12 @@ class CategoryController extends Controller
         return ['success' => true, 'categories' => Category::all()];
     }
 
+    public function save(Request $request) {
+        $this->authorize('manage', 'App\Category');
+
+        $category = $request->post('category');
+    }
+
     public function destroy(Category $category)
     {
         $this->authorize('delete', $category);

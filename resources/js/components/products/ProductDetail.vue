@@ -1,6 +1,16 @@
 <template>
     <main class="block-01" v-if="product">
-        <h3 class="bl-header pt-3 pb-3"> {{ product.product_name }} </h3>
+        <div class="row bl-header pt-3 pb-3">
+            <h3 class="col-6">
+                {{ product.product_name }}
+            </h3>
+            <div class="col-6 text-right">
+                <button class="btn btn-light text-dark" @click="$router.go(-1)">
+                    <i class="bi-arrow-left-circle-fill"></i>
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
         <div class="bl-body p-3">
             <div class="row">
                 <div class="col-8">
@@ -11,6 +21,16 @@
                         <div class="col-9">{{product.size}}</div>
                         <div class="col-3">Category Name: </div>
                         <div class="col-9">{{product.category_name}}</div>
+                        <div class="col-3">SKU: </div>
+                        <div class="col-9">{{product.SKU}}</div>
+                        <div class="col-3">Origin: </div>
+                        <div class="col-9">{{product.origin}}</div>
+                        <div class="col-3">Availability: </div>
+
+                        <div v-if="product.available == 1 || product.available == 0" class="col-9">Year round Product</div>
+                        <div v-if="product.available == 2" class="col-9">Seasonal product</div>
+                        <div v-if="product.available == 3" class="col-9">Holiday product</div>
+
                         <div class="col-3">Views: </div>
                         <div class="col-9">{{product.views}}</div>
                         <div class="col-3">Likes: </div>
@@ -47,6 +67,16 @@
                             </div>
                         </div>
                     </section>
+                    <section v-if="product.our_story != null" class="row">
+                        <div class="col-12">
+                            <h4 class="bl-header pt-3 pb-3">
+                                Our story
+                            </h4>
+                            <div class="bl-body">
+                                {{product.our_story}}
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -76,6 +106,6 @@ export default {
             })
         ;
     },
-    
+
 }
 </script>

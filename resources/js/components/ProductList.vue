@@ -1,18 +1,23 @@
 <template>
     <div class="block-01">
-        <h3 class="bl-header pt-3 pb-3 mb-4">
+        <section class="bl-header pt-3 pb-3 mb-4">
             <div class="row">
-                <div class="col-8">
+                <h3 class="col-6">
                     List of Products
-                </div>
-                <div class="col-4 actions text-right">
+                </h3>
+                <div class="col-6 actions text-right">
+                    <b-form-checkbox @change="toggleDisplayAll" class="d-inline-block">Display all</b-form-checkbox>
                     <router-link class="btn btn-light text-dark" :to="{name: 'new-product'}">
                         <i class="bi-plus-circle-fill"></i>
                         <span>New product</span>
                     </router-link>
+                    <button class="btn btn-light text-dark" @click="$router.go(-1)">
+                        <i class="bi-arrow-left-circle-fill"></i>
+                        <span>Back</span>
+                    </button>
                 </div>
             </div>
-        </h3>
+        </section>
         <div class="bl-body">
             <table class="table table-bordered">
                 <thead>
@@ -25,7 +30,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="product in products" :value="product.id" :key="product.id" >
-                        <td>{{ "_" }}</td>
+                        <td>{{ product.SKU }}</td>
                         <td>
                             <router-link :to="{name: 'product-detail', params: {id: product.id}}">{{ product.product_name }}</router-link>
                         </td>
@@ -83,23 +88,20 @@ export default {
             feedback: '',
             selectedProduct: Array,
             selectedIndex: 0,
+            categoryId: null,
 
 
             notificationMessage: '',
             isNotify: false,
             isLoading: true,
-            isSuccess: false
+            isSuccess: false,
+            isDisplayAll: false
 
         };
     },
     created(){
-        axios
-            .get('/api/products/')
-            .then((res) => {
-                // console.log(this.products);
-                this.products = res.data.products;
-            })
-        ;
+        this.categoryId = this.$route.params.id;
+        this.getProducts();
     },
     methods: {
         // To show information on pop up dialog box
@@ -142,7 +144,32 @@ export default {
                     console.log(error.response.data.errors);
                 })
             ;
+        }, // end of deleteProduct
+        /**
+         * Change status to display specific products by category or
+         * display all of products in database
+         */
+        toggleDisplayAll() {
+            this.isDisplayAll = !this.isDisplayAll;
+            this.getProducts();
+        },
+
+        getProducts() {
+
+            let requestCateId = (this.isDisplayAll === false)? this.categoryId : '';
+
+            axios
+                .get('/api/products/' + requestCateId)
+                .then((res) => {
+                    this.products = res.data.products;
+                    // console.log(res.data.products);
+                })
+            ;
         }
+
+
+
+
 
 
 

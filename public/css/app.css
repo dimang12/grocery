@@ -15,7 +15,7 @@
   --blue: #3490dc;
   --indigo: #6574cd;
   --purple: #9561e2;
-  --pink: #f66d9b;
+  --pink: #f196b5;
   --red: #e3342f;
   --orange: #f6993f;
   --yellow: #ffed4a;
@@ -503,7 +503,7 @@ mark,
 
 code {
   font-size: 87.5%;
-  color: #f66d9b;
+  color: #f196b5;
   word-wrap: break-word;
 }
 a > code {
@@ -10301,6 +10301,13 @@ a.article:hover {
 .block-02 .bl-header {
   border-bottom: rgba(0, 0, 0, 0.07) solid 1px;
 }
+.block-02 .btn-close {
+  background-color: #f196b5;
+}
+.block-02 .btn-close:hover {
+  background-color: #F196B5;
+}
+
 .fixed-bottom-right {
   position: fixed;
   right: -1px;

@@ -1,10 +1,7 @@
 <template>
     <div class="block-01">
         <div class="bl-body p-3">
-            <router-link :to="{name: 'categories'}" >Categories</router-link>
-            <router-link :to="{name: 'add-item'}" >Add Item</router-link>
             <router-view :initialCategories="categories"></router-view>
-
         </div>
     </div>
 </template>
@@ -20,11 +17,11 @@
         props: ['categories'],
         router: new VueRouter({
             mode: 'history',
-            base: 'menu-editor', 
+            base: 'menu-editor',
             routes: [
                 {
-                    path: '/categories',
-                    name: 'categories', 
+                    path: '/categories/:id',
+                    name: 'categories',
                     component: CategoryManager,
                 },
                 {
@@ -37,7 +34,7 @@
                     component: MenuItem
                 },
                 {
-                    path: '/product-list',
+                    path: '/product-list/:id',
                     name: 'product-list',
                     component: ProductList
 
@@ -55,9 +52,7 @@
                 {
                     path: '*',
                     redirect: {name: 'categories'}
-                }
-
-
+                },
             ]
         })
     }

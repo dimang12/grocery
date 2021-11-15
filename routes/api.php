@@ -22,12 +22,13 @@ use App\Http\Controllers\ProductController;
 
 // Both ways are work perfectly as the same.
 Route::post('/categories/upsert', [CategoryController::class, 'upsert']);
+Route::post('/categories/save', [CategoryController::class, 'save']);
 // Route::post('/categories/upsert', 'App\Http\Controllers\CategoryController@upsert');
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 Route::get('/categories', [CategoryController::class, 'get']);
 
 // Product
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id?}', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'detail']);
 Route::delete('/product/destroy', [ProductController::class, 'destroy']);
 // Use for adding new product into database
