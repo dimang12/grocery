@@ -34,10 +34,9 @@
                 <div class="sidebar-header">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img class="w-100" src="{{URL::asset('img/whollycity-logo.png')}}">
-                        <strong>BS</strong>
+                        <strong>W</strong>
                     </a>
                 </div>
-
                 <ul class="list-unstyled components">
                     <li class="active">
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -57,7 +56,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('menu-editor') }}">
+                        <a href="{{ route('admin') }}">
                             <i class="bi-stack"></i>
                             Categories
                         </a>

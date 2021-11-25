@@ -24,10 +24,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(["verify" => true]);
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('verified');
+//Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('verified');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/category', [CategoryController::class, 'index'])->name('category')->middleware('verified');
 Route::get('/category/{cate}', [CategoryController::class, 'detail'])->name('category-detail')->middleware('verified');
-Route::get('/menu-editor/{any?}', [AdminController::class, 'menu'])
-    ->name('menu-editor')
-    ->middleware('can:edit-menu')
+Route::get('/admin/{any?}', [AdminController::class, 'menu'])
+    ->name('admin')
+    ->middleware('can:admin')
     ->where('any', '.*');

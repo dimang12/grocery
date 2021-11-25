@@ -31,5 +31,8 @@ Route::get('/categories', [CategoryController::class, 'get']);
 Route::get('/products/{id?}', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'detail']);
 Route::delete('/product/destroy', [ProductController::class, 'destroy']);
+
 // Use for adding new product into database
 Route::post('/product/add', [ProductController::class, 'store']);
+Route::post('product/upload-image', [ProductController::class, 'uploadImage']);
+Route::put('/product/update', [ProductController::class, 'update']);

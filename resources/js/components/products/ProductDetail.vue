@@ -5,6 +5,9 @@
                 {{ product.product_name }}
             </h3>
             <div class="col-6 text-right">
+                <router-link :to="{name: 'edit-product', params:{id: id}}" class="btn btn-secondary">
+                    Edit
+                </router-link>
                 <button class="btn btn-light text-dark" @click="$router.go(-1)">
                     <i class="bi-arrow-left-circle-fill"></i>
                     <span>Back</span>
@@ -44,7 +47,10 @@
             </div>
             <div class="row">
                 <div class="col-4">
-                    <img class="w-100" :src="'/img/whollycity-logo.png'" />
+
+                    <img v-if="product.image != null" class="w-100" :src="`/storage/images/${product.image}`" />
+                    <img v-if="product.image == null" class="w-100" :src="'/img/whollycity-logo.png'" />
+
                 </div>
                 <div class="col-8">
                     <section class="row">
@@ -101,7 +107,8 @@ export default {
             .then((res) => {
                 if(res.data.isFound === true) {
                     this.product = res.data.product;
-                    console.log(this.product)
+                    // console.log(this.product.image);
+                    // console.log(this.product)
                 }
             })
         ;

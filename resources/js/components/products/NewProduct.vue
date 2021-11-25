@@ -16,7 +16,7 @@
             </div>
         </h3>
         <div class="bl-body">
-            <form class="block-02" @submit.prevent="save">
+            <form class="block-02" @submit.prevent="save" method="post">
                 <h5 class="bl-header p-3">Basic Information</h5>
                 <div class="bl-body p-3">
                     <div class="row mb-3">
@@ -77,8 +77,8 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div>
-                                <label for="formFileLg" class="form-label">Large file input example</label>
-                                <input class="form-control" id="formFileLg" type="file">
+                                <label class="form-label">Large file input example</label>
+                                <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,14 @@
     </main>
 </template>
 <script>
+import vue2Dropzone from 'vue2-dropzone';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
+
 export default {
+    components: {
+        vueDropzone: vue2Dropzone
+    },
     props: {
         initCategories: Array
     },
@@ -125,9 +132,19 @@ export default {
                 profile: '',
                 details: '',
                 our_story: '',
+                image: '',
                 available: 1,
                 origin: '',
                 available_at: ''
+            },
+            dropzoneOptions: {
+                url: '/api/product/upload-image',
+                thumbnailWidth: 300,
+                maxFilesize: 2, // The max file size is 2 MP
+                headers: { 'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content },
+                success(file, res) {
+                    file.filename = res;
+                }
             }
         }
     },
@@ -141,6 +158,10 @@ export default {
     methods: {
 
         save() {
+            let files = this.$refs.myVueDropzone.getAcceptedFiles();
+            if(files.length > 0 && files[0].filename){
+                this.product.image = files[0].filename;
+            }
             axios
                 .post('/api/product/add', this.product)
                 .then((res) => {

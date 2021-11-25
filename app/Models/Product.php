@@ -20,6 +20,7 @@ class Product extends Model
         'price',
         'size',
         'origin',
+        'image',
         'profile',
         'details',
         'our_story',

@@ -12,12 +12,19 @@
     import ProductList from '../ProductList.vue';
     import NewProduct from '../products/NewProduct.vue';
     import ProductDetail from '../products/ProductDetail.vue'
+    import EditProduct from "../products/EditProduct";
+    import store from '../../store/index';
+
     // Vue.use(VueRouter);
     export default {
+        store,
         props: ['categories'],
+        created() {
+            this.$store.commit('SET_CATEGORIES', _.cloneDeep(this.categories));
+        },
         router: new VueRouter({
             mode: 'history',
-            base: 'menu-editor',
+            base: 'admin',
             routes: [
                 {
                     path: '/categories/:id',
@@ -48,6 +55,12 @@
                     path: '/new-product',
                     name: 'new-product',
                     component: NewProduct
+                },
+                {
+                    path:'/edit-product/:id',
+                    name: 'edit-product',
+                    component: EditProduct,
+                    props: true
                 },
                 {
                     path: '*',

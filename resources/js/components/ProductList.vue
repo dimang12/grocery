@@ -80,7 +80,11 @@
     <!-- end block-01 -->
 </template>
 <script>
+
+
 export default {
+
+
     props: ["initialProducts"],
     data(){
         return{

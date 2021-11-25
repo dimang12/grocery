@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductItemPost;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DateTime;
@@ -16,6 +18,10 @@ class ProductController extends Controller
      */
     public function index($id = null)
     {
+//        $category = new Category();
+//        $category->getProducts()->map(function ($item) {
+//            return $item->only(['id', 'category_name']);
+//        });
         //
         $productQuery = Product::orderBy("created_at", 'desc');
         if($id != null){
@@ -45,7 +51,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->user()->can('edit-menu')) {
+        if (!$request->user()->can('admin')) {
             return response('Unauthorized', 403);
         }
         $request->validate([
@@ -56,6 +62,7 @@ class ProductController extends Controller
             'size' => 'required',
             'SKU' => 'required',
             'origin' => 'nullable',
+            'image' => 'nullable',
 
             'profile' => 'max:1024',
             'detail' => 'max:1024',
@@ -88,6 +95,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
+
     }
 
     /**
@@ -97,9 +105,27 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductItemPost $request, Product $product)
     {
         //
+
+//        $request->validate($this->validateFields());
+
+//        $product = $request->post();
+        $product = $request->validated();
+        print_r($product);
+        exit();
+        $productId = $product['id'];
+        $isSuccess = false;
+        if($product['id']) {
+//            unset($product['id']);
+            Product::where('id',$productId)
+                ->update($product)
+                ;
+            $isSuccess = true;
+        }
+        return $isSuccess;
+
     }
 
     /**
@@ -115,10 +141,23 @@ class ProductController extends Controller
         $isDestroyed = false;
         if( !empty($data) ){
             $currentDate = new DateTime();
-//            Product::where('id', $data->id)->update(['deleted_at'=>$currentDate]);
+            Product::where('id', $data->id)->update(['deleted_at'=>$currentDate]);
             $isDestroyed = true;
         }
         return $isDestroyed;
+    }
+
+    public function uploadImage(Request $request) {
+        if (!$request->user()->can('admin')) {
+            return response('Unauthorized', 403);
+        }
+
+        $file = $request->file('file');
+        // directory to save image
+        $dir = 'public/images';
+        //process saving image into directory
+        $path = $file->store($dir);
+        return str_replace("$dir/", '', $path);
     }
 
     public function detail($id)
@@ -136,5 +175,21 @@ class ProductController extends Controller
             $isFound = false;
         }
         return ['isFound' => $isFound, 'product' => $product];
+    }
+    protected function validateFields() {
+        return  [
+            'product_name' => 'required|max:128',
+            'category_id' => 'required|numeric',
+            'slug' => 'nullable',
+            'price' => 'required|numeric|min:0',
+            'size' => 'required',
+            'SKU' => 'required',
+            'origin' => 'nullable',
+            'image' => 'nullable',
+
+            'profile' => 'max:1024',
+            'detail' => 'max:1024',
+            'our_story' => 'nullable'
+        ];
     }
 }

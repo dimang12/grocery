@@ -67,10 +67,15 @@
         ],
         data(){
             return{
-                categories: _.cloneDeep(this.initialCategories),
+                // categories: _.cloneDeep(this.initialCategories),
                 category: {},
                 feedback: '',
             };
+        },
+        computed: {
+          categories() {
+              return this.$store.state.categories;
+            }
         },
         created() {
             // axios.post('/api/categories/upsert');
