@@ -30,6 +30,9 @@ Vue.component('admin-product-list', require('./components/admin/AdminProductList
 // Control on product
 Vue.component('produt-manager', require('./components/products/ProductManager').default)
 Vue.component('product-list', require('./components/ProductList.vue').default);
+//Layout
+Vue.component('front-layout', require('./components/frontend/layout/Layout').default);
+Vue.component('navbar', require('./components/frontend/layout/Navbar').default);
 
 // add BoostrapVue into project
 Vue.use(BootstrapVue);
