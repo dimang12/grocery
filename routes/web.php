@@ -32,3 +32,8 @@ Route::get('/admin/{any?}', [AdminController::class, 'menu'])
     ->name('admin')
     ->middleware('can:admin')
     ->where('any', '.*');
+
+Route::get('/home/{any?}', [HomeController::class, 'index'])
+    ->name('home')
+    ->where('any', '.*')
+;

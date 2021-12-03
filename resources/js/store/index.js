@@ -17,6 +17,9 @@ export default new Vuex.Store({
         },
         REMOVE_CATEGORY(state, index) {
             state.categories.slice(index, 1);
+        },
+        SET_PRODUCTS(state, products){
+            state.products = products;
         }
     }
 });

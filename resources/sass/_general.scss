@@ -1,5 +1,30 @@
+@import "animation";
+
+body {
+    background-color: #f5f5f5;
+}
+
 .fixed-bottom-right {
     position: fixed;
     right: -1px;
     bottom: 0;
+}
+
+// colors
+.c-primary  { color: #bc207a; }
+
+.border-rounded { border-radius: 5px;}
+.slider-outer   { min-height: 100vh;}
+.carousel-item { height: 450px;}
+
+
+
+.main-post  { overflow: hidden;}
+.main-post a { text-decoration: none;}
+.main-post .info { position: absolute; bottom: 0; background-color: rgb(255,255,255,.8); }
+.main-post .info .short-desc {overflow: hidden; height: 0;}
+.main-post:hover .info .short-desc,
+.main-post:focus .info .short-desc{
+    animation: slideUp .3s;
+    height: 100px;
 }

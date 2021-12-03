@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $now  = now();
+//        echo $now;
+        $homeProducts = Product::orderBy('available_at', 'DESC')->where('available_at', '<=', $now)->take(10)->get();
+//        print_r($homeProducts);
+//        return false;
         return view('home');
     }
+
+
 }

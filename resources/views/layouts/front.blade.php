@@ -27,8 +27,7 @@
 <body>
 <div id="app">
     <div class="wrapper">
-        <front-layout>
-        </front-layout>
+        <front-layout></front-layout>
     </div>
 </div>
 </body>
