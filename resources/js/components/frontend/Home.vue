@@ -17,8 +17,11 @@
                     @sliding-end="onSlideEnd"
                 >
                     <!-- Text slides with image -->
-                    <b-carousel-slide v-if="products.length > 0" v-for="(product,index) in products" >
-
+                    <b-carousel-slide
+                        v-for="(product,index) in products"
+                        v-bind:key="product.id"
+                        v-if="index < 3"
+                    >
                         <template #img>
                             <img
                                 class="d-block w-100 overflow-hidden"
@@ -26,22 +29,75 @@
                                 alt="image slot"
                             >
                         </template>
-
                         <h1>{{product.product_name}}</h1>
+                        <p>{{product.profile}}</p>
                     </b-carousel-slide>
                 </b-carousel>
-                <div class="position-relative ">
-                    <a href="" class="info p-3 text-dark">
-                        <h4 class="font-24 title">
-                            Testing title
-                        </h4>
-                        <p class="short-desc m-0 p-0 text-dark">នេះជាលើកទីមួយហើយដែល រូបរាងរបស់ Apple Watch ត្រូវបានគេផ្លាស់ប្តូរបើ​គិតចាប់ពី នាឡិកាអេឡិចត្រូនិចចាប់ប្រកាសលើកដំបូងនៅឆ្នាំ 2014 ។ លោក John Proccer បានបន្តថា នាឡិកា Apple Watch 7 នឹងមានព៌ណបៃតងខ្ចី  ព៌ណផ្ទៃមេឃ នឹងមានព៌ណផ្សេងទៀត លំនាំគ្នាទៅនឹង iPad Air និង iMac ដែរ</p>
-                    </a>
-                </div>
                 <!-- End carousel -->
+                <!-- Start two items in a row -->
+                <div class="row ">
+                    <div class="col-6 pt-4" v-for="(product, index) in products" v-if="index > 3 && index <= 7">
+                        `<b-card
+                            v-bind:data="product"
+                            v-bind:key="index"
+                            img-alt="Image"
+                            img-top
+                            tag="article"
+                            class="min-height-450"
+                            v-if="product.image != null"
+                            :img-src="'/storage/images/' + product.image"
+                        >
+                            <b-card-title>{{product.product_name}}</b-card-title>
+                            <b-card-text>
+                                {{product.profile}}
+                            </b-card-text>
+                            <b-button href="#" variant="primary">Detail</b-button>
+                        </b-card>`
+                        <b-card
+                            v-bind:data="product"
+                            v-bind:key="index"
+                            img-alt="Image"
+                            img-top
+                            tag="article"
+                            class="min-height-450"
+                            v-if="product.image == null"
+                            img-src="https://picsum.photos/600/300/?image=25"
+                        >
+                            <b-card-title>{{product.product_name}}</b-card-title>
+                            <b-card-text>
+                                {{product.profile}}
+                            </b-card-text>
+                            <b-button href="#" variant="primary">Detail</b-button>
+                        </b-card>
+
+                    </div>
+
+                </div>
+                <!-- End two items in a row -->
 
             </div>
-            <div class="col-5">test</div>
+            <div class="col-5">
+                <!-- Start right side -->
+                <ul>
+                    <li class="row" v-for="(product, index) of products" v-if="index > 7">
+                        <aside class="col-3">
+                            <img v-if="product.image == null" class="w-100" :src="'/img/whollycity-logo.png'" />
+                            <img v-if="product.image != null" class="w-100" :src="'/storage/images/' + product.image" />
+                        </aside>
+                        <article class="col-9">
+                            <b>{{ product.product_name }}</b>
+                            <p>{{product.profile}}</p>
+                        </article>
+                    </li>
+                </ul>
+                <!-- End the right side -->
+            </div>
+        </div>
+        <div class="row m-0 mt-5">
+            <b-jumbotron class="col-12" header="Where is Ads would be" lead="Bootstrap v4 Components for Vue.js 2">
+                <p>For more information visit website</p>
+                <b-button variant="primary" href="#">More Info</b-button>
+            </b-jumbotron>
         </div>
     </div>
 </template>

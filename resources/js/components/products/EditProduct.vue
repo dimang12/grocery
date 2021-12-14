@@ -156,6 +156,7 @@
         },
         methods: {
             update() {
+                console.log(this.id);
                 // clone only field that we need to update
                 // rather than send ton of observer object and functions to server
                 let updateProduct = {
@@ -180,6 +181,7 @@
                     updateProduct.image = files[0].filename;
                 }
                 // console.log(this.product.image);
+                console.log(updateProduct);
                 axios.put('/api/product/update/', updateProduct)
                 .then(res => {
 

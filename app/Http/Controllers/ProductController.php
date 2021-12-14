@@ -113,8 +113,8 @@ class ProductController extends Controller
 
 //        $product = $request->post();
         $product = $request->validated();
-        print_r($product);
-        exit();
+//        print_r($product);
+//        exit();
         $productId = $product['id'];
         $isSuccess = false;
         if($product['id']) {

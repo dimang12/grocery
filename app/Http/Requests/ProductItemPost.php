@@ -25,6 +25,7 @@ class ProductItemPost extends FormRequest
     {
         return [
             //
+            'id' => 'nullable',
             'product_name' => 'required|max:128',
             'category_id' => 'required|numeric',
             'slug' => 'nullable',
