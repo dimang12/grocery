@@ -11,12 +11,18 @@
         </section>
         <section class="row bl-body">
             <div class="col-8">
-                <router-link
-                    v-for="(category,index) in categories" :key="category.id"
-                    :to="{name:'product-list', params:{id: category.id}}"
-                    class="btn btn-outline-secondary p-3 m-2">
-                    {{category.category_name}}
-                </router-link>
+                <b-dropdown
+                    :key="'cat-key-' + category.id"
+                    size="large"
+                    toggle-class="p-3"
+                    v-for="(category, index) in categories"
+                    :text="category.category_name"
+                    variant="outline-secondary"
+                    class="m-2"
+                >
+                    <b-dropdown-item :to="{name:'product-list', params:{id:category.id}}">List Products</b-dropdown-item>
+                    <b-dropdown-item v-b-toggle.form-edit>Edit</b-dropdown-item>
+                </b-dropdown>
             </div>
             <div class="col-4">
                 <form class="block-02 p-3" @submit.prevent="" >
@@ -57,6 +63,11 @@
                     </section>
                 </form>
             </div>
+            <b-sidebar id="form-edit" title="Edit Category" shadow right>
+                <div class="px-3 py-2">
+
+                </div>
+            </b-sidebar>
         </section>
     </div>
 </template>
