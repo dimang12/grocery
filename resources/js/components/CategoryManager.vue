@@ -21,7 +21,7 @@
                     class="m-2"
                 >
                     <b-dropdown-item :to="{name:'product-list', params:{id:category.id}}">List Products</b-dropdown-item>
-                    <b-dropdown-item v-b-toggle.form-edit>Edit</b-dropdown-item>
+                    <b-dropdown-item v-b-toggle.form-edit @click="setCategory(category.id)">Edit</b-dropdown-item>
                 </b-dropdown>
             </div>
             <div class="col-4">
@@ -63,16 +63,23 @@
                     </section>
                 </form>
             </div>
-            <b-sidebar id="form-edit" title="Edit Category" shadow right>
-                <div class="px-3 py-2">
 
+            <b-sidebar id="form-edit" title="Edit Category" shadow right backdrop>
+                <div class="px-3 py-2">
+                    <EditCategory></EditCategory>
                 </div>
             </b-sidebar>
+
+
         </section>
     </div>
 </template>
 <script>
+    import EditCategory from "./admin/EditCategory";
+    import store from "../store/index";
     export default {
+        store,
+        components: {EditCategory},
         props: [
             'initialCategories',
         ],
@@ -89,6 +96,7 @@
             }
         },
         created() {
+
             // axios.post('/api/categories/upsert');
             this.category = {
                 parent_id: 0,
@@ -150,6 +158,16 @@
                         }
                     })
                 ;
+            },
+
+            setCategory(id) {
+                let curCategory = {};
+                this.categories.map((cate, index) => {
+                    if (cate.id === id) {
+                        curCategory = cate;
+                    }
+                });
+                this.$store.commit('SET_CATEGORY', curCategory);
             }
         }
     }

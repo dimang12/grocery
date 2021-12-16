@@ -10280,7 +10280,15 @@ a.article:hover {
   #sidebarCollapse span {
     display: none;
   }
+
+  .b-sidebar {
+    width: 100%;
+  }
 }
+.b-sidebar {
+  width: 520px !important;
+}
+
 #content {
   background: #f5f5f5;
 }
