@@ -10,7 +10,7 @@
             </div>
         </section>
         <section class="row bl-body">
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12 mb-3">
                 <b-dropdown
                     :key="'cat-key-' + category.id"
                     size="large"
@@ -24,7 +24,7 @@
                     <b-dropdown-item v-b-toggle.form-edit @click="setCategory(category.id)">Edit</b-dropdown-item>
                 </b-dropdown>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12">
                 <form class="block-02 p-3" @submit.prevent="" >
                     <section class="bl-header pb-2 mb-2 d-flex">
                         <h4 class="flex-grow-0">New Category</h4>
