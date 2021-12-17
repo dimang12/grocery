@@ -54,7 +54,11 @@ export default {
     },
     methods: {
         updateCategory() {
-
+            axios.put('api/categories/update/' + this.category.id, {
+                category: this.category
+            }).then(response => {
+                console.log(response);
+            })
             console.log(this.category.category_name)
         }
     }

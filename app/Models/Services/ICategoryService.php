@@ -1,11 +1,11 @@
 <?php
-namespace App\Models;
+namespace App\Models\Services;
 
 interface ICategoryService
 {
-    public function getAllCategories();
-    public function geCategory(int $categoryId);
-    public function addCategory($category);
-    public function updateCategory(int $categoryId, Category $category);
-    public function deleteCategory(int $categoryId);
+    public static function getAllCategories();
+    public static function geCategory(int $categoryId);
+    public static function addCategory($category);
+    public static function updateCategory($categoryId, $category);
+    public static function deleteCategory(int $categoryId);
 }

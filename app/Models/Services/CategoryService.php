@@ -1,5 +1,7 @@
 <?php
-namespace App\Models;
+namespace App\Models\Services;
+
+use App\Models\Category;
 
 class CategoryService implements ICategoryService
 {
@@ -7,7 +9,7 @@ class CategoryService implements ICategoryService
     /**
      * @return mixed
      */
-    public function getAllCategories()
+    public static function getAllCategories()
     {
         // TODO: Implement getAllCategories() method.
     }
@@ -16,7 +18,7 @@ class CategoryService implements ICategoryService
      * @param int $categoryId
      * @return mixed
      */
-    public function geCategory(int $categoryId)
+    public static function geCategory(int $categoryId)
     {
         // TODO: Implement geCategory() method.
     }
@@ -25,7 +27,7 @@ class CategoryService implements ICategoryService
      * @param $category
      * @return mixed
      */
-    public function addCategory($category)
+    public static function addCategory($category)
     {
         // TODO: Implement addCategory() method.
     }
@@ -35,16 +37,16 @@ class CategoryService implements ICategoryService
      * @param Category $category
      * @return mixed
      */
-    public function updateCategory(int $categoryId, Category $category)
+    public static function updateCategory($categoryId, $category)
     {
-        // TODO: Implement updateCategory() method.
+        Category::where('id', $categoryId)->update($category);
     }
 
     /**
      * @param int $categoryId
      * @return mixed
      */
-    public function deleteCategory(int $categoryId)
+    public static function deleteCategory(int $categoryId)
     {
         // TODO: Implement deleteCategory() method.
     }

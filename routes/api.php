@@ -22,6 +22,8 @@ use App\Http\Controllers\ProductController;
 
 // Both ways are work perfectly as the same.
 Route::post('/categories/upsert', [CategoryController::class, 'upsert']);
+//update single category
+Route::put('/categories/update/{id}', [CategoryController::class, 'update']);
 Route::post('/categories/save', [CategoryController::class, 'save']);
 // Route::post('/categories/upsert', 'App\Http\Controllers\CategoryController@upsert');
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);

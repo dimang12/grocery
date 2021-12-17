@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+
 use App\Models\Product;
+use App\Models\Services\CategoryService;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -58,6 +60,19 @@ class CategoryController extends Controller
             }
         }
         return ['success' => true, 'categories' => Category::all()];
+    }
+
+    public function update($categoryId, Request $request) {
+        $this->authorize('manage', 'App\Category');
+
+        $category = $request->post('category');
+        // check $categoryId is not null or empty
+        if(!empty($categoryId)) {
+            // unset the created_at because the category was created by then
+            if(isset($category["created_at"])) unset($category["created_at"]);
+            if(isset($category["updated_at"])) $category["updated_at"] = new DateTime();
+            CategoryService::updateCategory($categoryId, $category);
+        }
     }
 
     public function save(Request $request) {
