@@ -2,10 +2,10 @@
     <div class="block-01">
         <section class="bl-header pt-3 pb-3 mb-4">
             <div class="row">
-                <h3 class="col-6">
+                <h3 class="col-6 col-sm-12">
                     List of Products
                 </h3>
-                <div class="col-6 actions text-right">
+                <div class="col-6 col-sm-12 actions text-right">
                     <b-form-checkbox @change="toggleDisplayAll" class="d-inline-block">Display all</b-form-checkbox>
                     <router-link class="btn btn-light text-dark" :to="{name: 'new-product'}">
                         <i class="bi-plus-circle-fill"></i>
@@ -23,9 +23,9 @@
                 <thead>
                     <th>SKU</th>
                     <th>Name</th>
-                    <th>Size/Qty</th>
+                    <th class="d-none d-md-block">Size/Qty</th>
                     <th>Price</th>
-                    <th>Views</th>
+                    <th class="d-none d-md-block">Views</th>
                     <th>Actions</th>
                 </thead>
                 <tbody>
@@ -34,9 +34,9 @@
                         <td>
                             <router-link :to="{name: 'product-detail', params: {id: product.id}}">{{ product.product_name }}</router-link>
                         </td>
-                        <td>{{ product.size }}</td>
+                        <td class="d-none d-md-block">{{ product.size }}</td>
                         <td>$ {{ product.price }}</td>
-                        <td>{{ product.views }}</td>
+                        <td class="d-none d-md-block">{{ product.views }}</td>
                         <td>
                             <div class="d-inline-block w-100">
                                 <button v-b-modal.modal-1 class="btn btn-outline-secondary btn-sm rounded-circle">
@@ -83,8 +83,6 @@
 
 
 export default {
-
-
     props: ["initialProducts"],
     data(){
         return{
