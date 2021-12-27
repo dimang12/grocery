@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="form-label">Category name</label>
-                                <input type="text" v-model="category.category_name" class="form-control">
+                                <input required type="text" v-model="category.category_name" class="form-control">
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="form-label">Category detail:</label>
