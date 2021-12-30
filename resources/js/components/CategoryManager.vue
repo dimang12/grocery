@@ -3,7 +3,7 @@
         <section class="row bl-header pb-3 mb-3">
             <h3 class="col-6">Category Manager</h3>
             <div class="col-6 action text-right">
-                <button type="button" @click="addCategory()" class="btn btn-secondary">
+                <button type="button" @click="addCategory()" class="btn btn-outline-secondary">
                     <i class="bi bi bi-file-plus-fill"></i>
                     Add category
                 </button>
@@ -64,9 +64,9 @@
                 </form>
             </div>
 
-            <b-sidebar id="form-edit" title="Edit Category" shadow right backdrop>
+            <b-sidebar id="form-edit" v-model="isShowSidebar"  ref="mySidebar" title="Edit Category"  shadow right backdrop>
                 <div class="px-3 py-2">
-                    <EditCategory></EditCategory>
+                    <component :is="newOrEditCategory"></component>
                 </div>
             </b-sidebar>
 
@@ -75,28 +75,37 @@
     </div>
 </template>
 <script>
+    import NewCategory from "./admin/NewCategory.vue";
     import EditCategory from "./admin/EditCategory";
+
     import store from "../store/index";
     export default {
         store,
-        components: {EditCategory},
+        components: {EditCategory, NewCategory},
         props: [
             'initialCategories',
+
         ],
         data(){
             return{
                 // categories: _.cloneDeep(this.initialCategories),
                 category: {},
+                addOrEdit: 2,
+                addOrEditTittle: 'Edit Category',
                 feedback: '',
+                isShowSidebar: false
             };
         },
         computed: {
           categories() {
               return this.$store.state.categories;
+            },
+            newOrEditCategory() {
+                return (this.addOrEdit == 1)? 'NewCategory': 'EditCategory';
             }
         },
         created() {
-
+            // this.$refs.;
             // axios.post('/api/categories/upsert');
             this.category = {
                 parent_id: 0,
@@ -129,18 +138,20 @@
 
             },
             addCategory() {
-                this.categories.push({
-                    category_name: '',
-                    parent_id: 0,
-                    left: 0,
-                    right: 0,
-                    cate_ordering: this.categories.length + 1
-                });
-                this.$nextTick(() => {
-                    window.scrollTo(0, document.body.scrollHeight);
-                    this.$refs[''][0].focus();
-                    console.log(this.$refs[''][0]);
-                });
+                this.isShowSidebar = true;
+                this.addOrEdit = 1;
+                // this.categories.push({
+                //     category_name: '',
+                //     parent_id: 0,
+                //     left: 0,
+                //     right: 0,
+                //     cate_ordering: this.categories.length + 1
+                // });
+                // this.$nextTick(() => {
+                //     window.scrollTo(0, document.body.scrollHeight);
+                //     this.$refs[''][0].focus();
+                //     console.log(this.$refs[''][0]);
+                // });
                 return false;
             },
             saveCategories() {
@@ -162,12 +173,19 @@
 
             setCategory(id) {
                 let curCategory = {};
+                this.addOrEdit = 2;
                 this.categories.map((cate, index) => {
                     if (cate.id === id) {
                         curCategory = cate;
                     }
                 });
                 this.$store.commit('SET_CATEGORY', curCategory);
+            },
+
+            // Switch to show add or edit form
+            toggleAddEdit(addOrEditOption = 1) {
+                this.addOrEdit = addOrEditOption;
+
             }
         }
     }
