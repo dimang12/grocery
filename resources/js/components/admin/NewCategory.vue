@@ -57,7 +57,15 @@ export default {
     },
     methods: {
         saveCategory() {
-            
+            axios
+            .post('/api/categories/save', {
+                category: this.category
+            })
+            .then((res) => {
+                this.categories.push(this.category);
+                console.log('Congradulation');
+            })
+            ;
         }
     }
 }

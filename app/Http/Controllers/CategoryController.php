@@ -79,6 +79,7 @@ class CategoryController extends Controller
         $this->authorize('manage', 'App\Category');
 
         $category = $request->post('category');
+        CategoryService::insertCategory($category);
     }
 
     public function destroy(Category $category)

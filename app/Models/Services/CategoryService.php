@@ -18,7 +18,7 @@ class CategoryService implements ICategoryService
      * @param int $categoryId
      * @return mixed
      */
-    public static function geCategory(int $categoryId)
+    public static function getCategory(int $categoryId)
     {
         // TODO: Implement geCategory() method.
     }
@@ -27,9 +27,9 @@ class CategoryService implements ICategoryService
      * @param $category
      * @return mixed
      */
-    public static function addCategory($category)
+    public static function insertCategory($category)
     {
-        // TODO: Implement addCategory() method.
+        Category::create($category);
     }
 
     /**
